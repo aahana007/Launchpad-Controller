@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Midi;
 using vJoyInterfaceWrap;
 using System.Collections.Generic;
@@ -50,12 +50,15 @@ namespace midi2controller
                 Console.WriteLine("Velocity: " + msg.Velocity);
                 Console.WriteLine("-------------------");
                 SendNote(Channel.Channel1, msg.Pitch, (int)PadColor.FULL_GREEN);
-                joystick.SetBtn(true, id, PitchToButtonNum(msg.Pitch));
+                uint buttonNum = PitchToButtonNum5431(msg.Pitch);
+                
+                Console.WriteLine("Aahana's mapped ButtonNum = " + buttonNum);
+                joystick.SetBtn(true, id, buttonNum);
             }
             else
             {
                 SendNote(Channel.Channel1, msg.Pitch, (int)PadColor.FULL_ORANGE);
-                joystick.SetBtn(false, id, PitchToButtonNum(msg.Pitch));
+                joystick.SetBtn(false, id, PitchToButtonNum5431(msg.Pitch));
             }
         }
 
@@ -64,7 +67,7 @@ namespace midi2controller
             for (int i = 0; i < InputDevice.InstalledDevices.Count; i++)
             {
                 string currentName = InputDevice.InstalledDevices[i].Name;
-                if (currentName.Contains("Launchpad") || currentName.Contains("LPMini") || currentName.Contains("LPX"))
+                if (currentName.Contains("Launchpad") || currentName.Contains("LPMini") || currentName.Contains("LPX")) 
                 {
                     Console.WriteLine("Found: " + currentName);
                     launchpadInput = InputDevice.InstalledDevices[i];
@@ -75,7 +78,7 @@ namespace midi2controller
             for (int i = 0; i < OutputDevice.InstalledDevices.Count; i++)
             {
                 string currentName = OutputDevice.InstalledDevices[i].Name;
-                if (currentName.Contains("Launchpad") || currentName.Contains("LPMini") || currentName.Contains("LPX"))
+                if (currentName.Contains("LaunchPad") || currentName.Contains("LPMini") || currentName.Contains("LPX"))  
                 {
                     Console.WriteLine("Found: " + currentName);
                     launchpadOutput = OutputDevice.InstalledDevices[i];
@@ -143,6 +146,94 @@ namespace midi2controller
                 }
             }
             return counter;
+        }
+
+        public uint PitchToButtonNum5431(Pitch pitch)
+        {
+            if(pitch.Equals(Pitch.E3))
+            {
+                return 1;
+            }
+
+            else if (pitch.Equals(Pitch.F3))
+            {
+                return 2;
+            }
+
+            else if (pitch.Equals(Pitch.FSharp3))
+            {
+                return 3;
+            }
+
+            else if (pitch.Equals(Pitch.G3))
+            {
+                return 4;
+            }
+
+            else if (pitch.Equals(Pitch.C6))
+            {
+                return 5;
+            }
+               
+            else if (pitch.Equals(Pitch.CSharp6))
+                {
+                    return 6;
+                }
+
+            else if (pitch.Equals(Pitch.D6))
+            {
+                return 7;
+            }
+            
+            else if (pitch.Equals(Pitch.DSharp6))
+            {
+                return 8;
+            }
+
+            else if (pitch.Equals(Pitch.C3))
+            {
+                return 9;
+            }
+
+            else if (pitch.Equals(Pitch.CSharp3))
+            {
+                return 10;
+            }
+
+            else if (pitch.Equals(Pitch.D3))
+            {
+                return 11;
+            }
+
+            else if (pitch.Equals(Pitch.DSharp3))
+            {
+                return 12;
+            }
+
+            else if (pitch.Equals(Pitch.GSharp5))
+            {
+                return 13;
+            }
+
+            else if (pitch.Equals(Pitch.A5))
+            {
+                return 14;
+            }
+
+            else if (pitch.Equals(Pitch.ASharp5))
+            {
+                return 15;
+            }
+
+            else if (pitch.Equals(Pitch.B5))
+            {
+                return 16;
+            }
+
+            else //not recongized pitch for FRC5431
+            {
+                return 0;
+            }
         }
 
         public void SetUpJoystick()
