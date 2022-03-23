@@ -1,0 +1,9 @@
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\bin\x64\Debug\FeederDemoCS.exe.config
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\bin\x64\Debug\FeederDemoCS.exe
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\bin\x64\Debug\FeederDemoCS.pdb
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\obj\x64\Debug\LaunchpadController.csproj.AssemblyReference.cache
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\obj\x64\Debug\LaunchpadController.csproj.CoreCompileInputs.cache
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\obj\x64\Debug\LaunchpadController.csproj.CopyComplete
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\obj\x64\Debug\FeederDemoCS.exe
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\obj\x64\Debug\FeederDemoCS.pdb
+C:\Users\aahana\Documents\GitHub\Launchpad-Controller\bin\x64\Debug\vJoyInterfaceWrap.dll
