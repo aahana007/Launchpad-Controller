@@ -24,19 +24,19 @@ namespace midi2controller
             new List<Pitch>() { Pitch.C7, Pitch.CSharp7, Pitch.D7, Pitch.DSharp7, Pitch.E7, Pitch.F7, Pitch.FSharp7, Pitch.G7, Pitch.GSharp7},
             new List<Pitch>() { Pitch.E8, Pitch.F8, Pitch.FSharp8, Pitch.G8, Pitch.GSharp8, Pitch.A8, Pitch.ASharp8, Pitch.B8, Pitch.C9}
         };
-        
+
 
         public Launchpad()
         {
             joystick = new vJoy();
             iReport = new vJoy.JoystickState();
             padMatrix = new List<List<Pad>>();
-            for(int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
                 padMatrix.Add(new List<Pad>());
-                for(int j = 0; j < 9; j++)
+                for (int j = 0; j < 9; j++)
                 {
-                    padMatrix[i].Add(new Pad(Channel.Channel1));
+                    padMatrix[i].Add(new Pad(Channel.Channel3));
                 }
             }
         }
@@ -49,15 +49,15 @@ namespace midi2controller
                 Console.WriteLine("Note: " + msg.Pitch);
                 Console.WriteLine("Velocity: " + msg.Velocity);
                 Console.WriteLine("-------------------");
-                SendNote(Channel.Channel1, msg.Pitch, (int)PadColor.FULL_GREEN);
+                SendNote(Channel.Channel3, msg.Pitch, (int)PadColor.FULL_AMBER);
                 uint buttonNum = PitchToButtonNum5431(msg.Pitch);
-                
+
                 Console.WriteLine("Aahana's mapped ButtonNum = " + buttonNum);
                 joystick.SetBtn(true, id, buttonNum);
             }
             else
             {
-                SendNote(Channel.Channel1, msg.Pitch, (int)PadColor.FULL_ORANGE);
+                SendNote(Channel.Channel3, msg.Pitch, (int)PadColor.FULL_GREEN);
                 joystick.SetBtn(false, id, PitchToButtonNum5431(msg.Pitch));
             }
         }
@@ -67,22 +67,25 @@ namespace midi2controller
             for (int i = 0; i < InputDevice.InstalledDevices.Count; i++)
             {
                 string currentName = InputDevice.InstalledDevices[i].Name;
-                if (currentName.Contains("Launchpad") || currentName.Contains("LPMini") || currentName.Contains("LPX")) 
+                if (currentName.Contains("Launchpad") || currentName.Contains("LPMini") || currentName.Contains("LPX"))
                 {
                     Console.WriteLine("Found: " + currentName);
                     launchpadInput = InputDevice.InstalledDevices[i];
                     launchpadInput.Open();
+                    Console.WriteLine("Found Input device");
                 }
             }
 
             for (int i = 0; i < OutputDevice.InstalledDevices.Count; i++)
             {
                 string currentName = OutputDevice.InstalledDevices[i].Name;
-                if (currentName.Contains("LaunchPad") || currentName.Contains("LPMini") || currentName.Contains("LPX"))  
+                if (currentName.Contains("LaunchPad") || currentName.Contains("LPMini") || currentName.Contains("LPX"))
                 {
                     Console.WriteLine("Found: " + currentName);
                     launchpadOutput = OutputDevice.InstalledDevices[i];
                     launchpadOutput.Open();
+                    Console.WriteLine("Found Output device");
+                    ResetColors();
                 }
             }
 
@@ -112,7 +115,7 @@ namespace midi2controller
                     for (int j = 0; j < padMatrix[i].Count; j++)
                     {
                         Pitch pitch = LookUpPitch(i, j);
-                        SendNote(Channel.Channel1, pitch, (int)PadColor.FULL_ORANGE);
+                        SendNote(Channel.Channel3, pitch, (int)PadColor.FULL_ORANGE);
                     }
                 }
             }
@@ -122,7 +125,7 @@ namespace midi2controller
         {
             foreach (Pitch pitch in Enum.GetValues(typeof(Pitch)))
             {
-                SendNote(Channel.Channel1, pitch, 12);
+                SendNote(Channel.Channel3, pitch, 60);
             }
         }
 
@@ -148,9 +151,284 @@ namespace midi2controller
             return counter;
         }
 
+
+
+
         public uint PitchToButtonNum5431(Pitch pitch)
         {
-            if(pitch.Equals(Pitch.E3))
+            if (pitch.Equals(Pitch.E6))
+            {
+                return 1;
+            }
+
+            else if (pitch.Equals(Pitch.F6))
+            {
+                return 1;
+            }
+
+            else if (pitch.Equals(Pitch.C6))
+            {
+                return 1;
+            }
+
+            else if (pitch.Equals(Pitch.CSharp6))
+            {
+                return 1;
+            }
+
+            else if (pitch.Equals(Pitch.FSharp6))
+            {
+                return 2;
+            }
+
+            else if (pitch.Equals(Pitch.G6))
+            {
+                return 2;
+            }
+
+            else if (pitch.Equals(Pitch.D6))
+            {
+                return 2;
+            }
+
+            else if (pitch.Equals(Pitch.DSharp6))
+            {
+                return 2;
+            }
+
+            else if (pitch.Equals(Pitch.C9))
+            {
+                return 3;
+            }
+
+            else if (pitch.Equals(Pitch.CSharp9))
+            {
+                return 3;
+            }
+
+            else if (pitch.Equals(Pitch.GSharp8))
+            {
+                return 3;
+            }
+
+            else if (pitch.Equals(Pitch.A8))
+            {
+                return 3;
+            }
+
+            else if (pitch.Equals(Pitch.D9))
+            {
+                return 4;
+            }
+
+            else if (pitch.Equals(Pitch.DSharp9))
+            {
+                return 4;
+            }
+
+            else if (pitch.Equals(Pitch.ASharp8))
+            {
+                return 4;
+            }
+
+            else if (pitch.Equals(Pitch.B8))
+            {
+                return 4;
+            }
+
+            else if (pitch.Equals(Pitch.CSharp7))
+            {
+                return 5;
+            }
+
+            else if (pitch.Equals(Pitch.GSharp5))
+            {
+                return 5;
+            }
+
+            else if (pitch.Equals(Pitch.A5))
+            {
+                return 5;
+            }
+
+            else if (pitch.Equals(Pitch.E5))
+            {
+                return 5;
+            }
+
+            else if (pitch.Equals(Pitch.F5))
+            {
+                return 5;
+            }
+
+            else if (pitch.Equals(Pitch.ASharp5))
+            {
+                return 6;
+            }
+
+            else if (pitch.Equals(Pitch.B5))
+            {
+                return 6;
+            }
+
+            else if (pitch.Equals(Pitch.FSharp5))
+            {
+                return 6;
+            }
+
+            else if (pitch.Equals(Pitch.G5))
+            {
+                return 6;
+            }
+
+            else if (pitch.Equals(Pitch.E8))
+            {
+                return 7;
+            }
+
+            else if (pitch.Equals(Pitch.F8))
+            {
+                return 7;
+            }
+
+            else if (pitch.Equals(Pitch.C8))
+            {
+                return 7;
+            }
+
+            else if (pitch.Equals(Pitch.CSharp8))
+            {
+                return 7;
+            }
+
+            else if (pitch.Equals(Pitch.FSharp8))
+            {
+                return 8;
+            }
+
+            else if (pitch.Equals(Pitch.G8))
+            {
+                return 8;
+            }
+
+            else if (pitch.Equals(Pitch.D8))
+            {
+                return 8;
+            }
+
+            else if (pitch.Equals(Pitch.DSharp8))
+            {
+                return 8;
+            }
+
+            else if (pitch.Equals(Pitch.C5))
+            {
+                return 9;
+            }
+
+            else if (pitch.Equals(Pitch.CSharp5))
+            {
+                return 9;
+            }
+
+            else if (pitch.Equals(Pitch.GSharp4))
+            {
+                return 9;
+            }
+
+            else if (pitch.Equals(Pitch.A4))
+            {
+                return 9;
+            }
+
+            else if (pitch.Equals(Pitch.D5))
+            {
+                return 10;
+            }
+
+            else if (pitch.Equals(Pitch.DSharp5))
+            {
+                return 10;
+            }
+
+            else if (pitch.Equals(Pitch.ASharp4))
+            {
+                return 10;
+            }
+
+            else if (pitch.Equals(Pitch.B4))
+            {
+                return 10;
+            }
+
+            else if (pitch.Equals(Pitch.GSharp7))
+            {
+                return 11;
+            }
+
+            else if (pitch.Equals(Pitch.A7))
+            {
+                return 11;
+            }
+
+            else if (pitch.Equals(Pitch.E7))
+            {
+                return 11;
+            }
+
+            else if (pitch.Equals(Pitch.F7))
+            {
+                return 11;
+            }
+
+            else if (pitch.Equals(Pitch.E4))
+            {
+                return 12;
+            }
+
+            else if (pitch.Equals(Pitch.F4))
+            {
+                return 12;
+            }
+
+            else if (pitch.Equals(Pitch.C4))
+            {
+                return 12;
+            }
+
+            else if (pitch.Equals(Pitch.CSharp4))
+            {
+                return 12;
+            }
+
+            else if (pitch.Equals(Pitch.D7))
+            {
+                return 13;
+            }
+
+            else if (pitch.Equals(Pitch.DSharp7))
+            {
+                return 13;
+            }
+
+            else if (pitch.Equals(Pitch.ASharp6))
+            {
+                return 13;
+            }
+
+            else if (pitch.Equals(Pitch.B6))
+            {
+                return 13;
+            }
+
+            else //not recongized pitch for FRC5431
+            {
+                return 0;
+            }
+        }
+        public uint PitchToButtonNum5431_old(Pitch pitch)
+        {
+            if (pitch.Equals(Pitch.E3))
             {
                 return 1;
             }
@@ -174,17 +452,17 @@ namespace midi2controller
             {
                 return 5;
             }
-               
+
             else if (pitch.Equals(Pitch.CSharp6))
-                {
-                    return 6;
-                }
+            {
+                return 6;
+            }
 
             else if (pitch.Equals(Pitch.D6))
             {
                 return 7;
             }
-            
+
             else if (pitch.Equals(Pitch.DSharp6))
             {
                 return 8;
