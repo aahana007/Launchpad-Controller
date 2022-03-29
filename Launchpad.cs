@@ -52,7 +52,7 @@ namespace midi2controller
                 SendNote(Channel.Channel3, msg.Pitch, (int)PadColor.FULL_AMBER);
                 uint buttonNum = PitchToButtonNum5431(msg.Pitch);
 
-                Console.WriteLine("Aahana's mapped ButtonNum = " + buttonNum);
+                Console.WriteLine("5431's mapped ButtonNum = " + buttonNum);
                 joystick.SetBtn(true, id, buttonNum);
             }
             else
